@@ -99,6 +99,10 @@ input[type=text]:focus {
   margin: 0 20px 0 15px;
 }
 
+input[type=checkbox]:checked .toggle-container + .todo-item {
+  text-decoration: line-through;
+}
+
 .toggle-appear {
   background-color: hsl(235, 24%, 19%);
   position: absolute;
@@ -138,6 +142,13 @@ input[type=checkbox]:checked + .toggle-appear::before {
 .todos-container:hover .close-button {
   display: block;
 }
+
+.checked-through {
+  text-decoration: line-through;
+  color: hsl(235, 19%, 35%);
+}
+
+
 
 
 
