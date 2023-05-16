@@ -132,7 +132,7 @@ input[type=checkbox]:checked + .toggle-appear::before {
 }
 
 .close-button {
-  color: hsl(240, 1%, 35%);
+  color: hsl(240, 16%, 10%);
   font-weight: 300;
   margin-right: 10px;
   cursor: pointer;
@@ -148,8 +148,31 @@ input[type=checkbox]:checked + .toggle-appear::before {
   color: hsl(235, 19%, 35%);
 }
 
+.manipulate-cont p {
+  font-size: 0.8rem;
+}
 
+.manipulate-cont {
+  color: hsl(233, 14%, 35%);
+  display: flex;
+  padding: 0 20px;
+  justify-content: space-between;
+}
 
+.manipulate-cont p:hover, .manipulate-cont h5:hover {
+  cursor: pointer;
+  color: hsl(220, 98%, 61%);
+}
+
+.middle-cont {
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+}
+
+h5:focus {
+  color: red;
+}
 
 
 

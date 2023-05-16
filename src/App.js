@@ -4,6 +4,8 @@ import theme from "./images/icon-sun.svg";
 import CloseIcon from '@mui/icons-material/Close';
 
 function App() {
+
+  // ! Object is the key :)
   const [todos, updateTodos] = useState([
     {
       name: "Complete onine Javascript course",
@@ -42,6 +44,25 @@ function App() {
     id: "",
     checked: false
   })
+  // * This will be the value of todos if completed is clicked
+  // ! Kapag empty ang allTodos, ang value nya is the todos array
+  const [filteredTodos, setFilteredTodos] = useState("All");
+
+  const [length, setLength] = useState(todos.length);
+
+  const filteredArray = todos.filter(todo => {
+    if (filteredTodos === "Active") {
+      return !todo.checked
+    } else if (filteredTodos === "Completed"){
+      return todo.checked;
+    } else {
+      return true // ! Just keep it.
+    }
+  })
+
+  const runFilter = filter => {
+    setFilteredTodos(filter)
+  }
 
   return (
     <div>
@@ -75,14 +96,20 @@ function App() {
         }} value={input.name} type="text" placeholder="Create a new todo..." autoCorrect="none" />
       </div>
       <div>
-        {todos.map((todo, idx)=> {
+        {filteredArray.map((todo, idx) => {
           return (
             <div key={idx} id={idx} className="todos-container">
               <label className="toggle-container">
                 <input id={todo.id} onChange={e => {
                   const {id, checked} = e.target;
-                  console.log(id)
+                  console.log(id, checked);
 
+                  const countCheck = todos.filter(todo => {
+                    return !todo.checked;
+                  })
+                  console.log(countCheck)
+                  setLength(countCheck.length - 1);
+                  // We change the current value of the checked property depending on the value of checked(e)
                   updateTodos(prevValue => {
                     return prevValue.map(val => {
                       return val.id == id ? {...val, checked} : val;
@@ -104,8 +131,26 @@ function App() {
             </div>
           )
         })}
-        <div className="todos-container">
-          
+        <div className="todos-container manipulate-cont">
+          <p>{length} items left</p>
+          <div className="middle-cont">
+            <h5 onClick={e => {
+             runFilter(e.target.innerText);
+            }}>All</h5>
+            <h5 onClick={e => {
+             runFilter(e.target.innerText);
+            }}>Active</h5>
+            <h5 onClick={e => {
+             runFilter(e.target.innerText);
+            }}>Completed</h5>
+          </div>
+          <p onClick={() => {
+            updateTodos(prevValue => {
+              return prevValue.filter(prev => {
+                return !prev.checked;
+              })
+            })
+          }}>Clear Completed</p>
         </div>
       </div>
     </div>
@@ -113,3 +158,51 @@ function App() {
 }
 
 export default App;
+// updateAllTodos(prevValue => {
+              //   return prevValue.map(item => {
+              //     return mapIt.map(mapItem => {
+              //       return item.id === mapItem.id ? mapItem : item;
+              //     })
+              //   })
+              // }); // ! We save the current value
+              // // ! We created a filter for active and completed arrays.
+              // const active = todos.filter(todo => {
+              //   return !todo.checked;
+              // })
+
+              // const completed = todos.filter(todo => {
+              //   return todo.checked;
+              // })
+
+              // const isThereActive = todos.every(todo => {
+              //   return !todo.checked;
+              // })
+              
+              // console.log(active, completed);
+              // console.log(e.target.innerText);
+              // console.log(isThereActive);
+              
+              // updateActiveTodos(prevValue => {
+              //   return isThereActive ? prevValue : [...prevValue, ...active];
+              // })
+
+              // updateCompletedTodos(prevValue => {
+              //   return [...prevValue, ...completed];
+              // })
+
+
+              // // I think the problem is here
+              // updateAllTodos();
+              // // [...active, ...completed]
+              // updateTodos(prevValue => {
+              //   return prevValue.filter(todo => {
+              //     return !todo.checked;
+              //   })
+              // })
+               // const [counter, setCounter] = useState(0);
+  // const [allTodos, updateAllTodos] = useState([]); // ! Test 
+  // const [activeTodos, updateActiveTodos] = useState([]);
+  // const [completedTodos, updateCompletedTodos] = useState([]);
+  // const [showTodos, updateShowTodos] = useState(true);
+
+            
