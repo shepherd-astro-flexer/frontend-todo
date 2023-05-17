@@ -141,6 +141,7 @@ input[type=checkbox]:checked + .toggle-appear::before {
 /* ! CSS lang pala fffFFFfFFF! :/ */
 .todos-container:hover .close-button {
   display: block;
+  color: hsl(237, 14%, 26%);
 }
 
 .checked-through {
@@ -174,7 +175,9 @@ h5:focus {
   color: red;
 }
 
-
+.todos-left {
+  pointer-events: none;
+}
 
 
 

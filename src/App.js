@@ -4,7 +4,6 @@ import theme from "./images/icon-sun.svg";
 import CloseIcon from '@mui/icons-material/Close';
 
 function App() {
-
   // ! Object is the key :)
   const [todos, updateTodos] = useState([
     {
@@ -48,20 +47,24 @@ function App() {
   // ! Kapag empty ang allTodos, ang value nya is the todos array
   const [filteredTodos, setFilteredTodos] = useState("All");
 
-  const [length, setLength] = useState(todos.length);
+  const counter = todos.filter(todo => {
+    return !todo.checked;
+  })
+  
+  const [todosLeft, setTodosLeft] = useState(counter.length);
 
   const filteredArray = todos.filter(todo => {
     if (filteredTodos === "Active") {
-      return !todo.checked
-    } else if (filteredTodos === "Completed"){
+      return !todo.checked;
+    } else if (filteredTodos === "Completed") {
       return todo.checked;
     } else {
-      return true // ! Just keep it.
+      return true;
     }
   })
 
-  const runFilter = filter => {
-    setFilteredTodos(filter)
+  const filterMode = mode => {
+    setFilteredTodos(mode);
   }
 
   return (
@@ -77,9 +80,18 @@ function App() {
           <input type="checkbox" onChange={e => {
             const checkbox = e.target.checked;
 
+            setTodosLeft(prevValue => {
+              return checkbox && input.name !== "" ? prevValue + 1 : prevValue;
+            })
+
             updateTodos(prevValue => {
               return checkbox && input.name !== "" ? [...prevValue, input] : [...prevValue];
             })
+            // ! Test CONTINUE
+            // ! After adding an item input.name value should change to an empty string
+            // updateInput(prevValue => {
+            //   return checkbox && input.name !== "" ? input.name = "" : prevValue;
+            // })
           }} />
           <span className="toggle-appear"></span>
         </label>
@@ -104,11 +116,9 @@ function App() {
                   const {id, checked} = e.target;
                   console.log(id, checked);
 
-                  const countCheck = todos.filter(todo => {
-                    return !todo.checked;
+                  setTodosLeft(prevValue => {
+                    return checked ? prevValue - 1 : prevValue + 1;
                   })
-                  console.log(countCheck)
-                  setLength(countCheck.length - 1);
                   // We change the current value of the checked property depending on the value of checked(e)
                   updateTodos(prevValue => {
                     return prevValue.map(val => {
@@ -121,27 +131,35 @@ function App() {
               <p className={`todo-item ${todo.checked ? "checked-through" : ""}`}>{todo.name}</p>
               <span onClick={e => {
                 const id = e.currentTarget.id;
+
+                const counter = todos.filter(todo => {
+                  return !todo.checked;
+                })
+                
+                setTodosLeft(counter.length - 1);
                 
                 updateTodos(prevValue => {
                   return prevValue.filter((val, idx) => {
                     return idx != id; // ! we are only using 1 equal sign, so the type won't matter when comparing
                   })
-                })
+                }) 
+
+
               }} id={idx} className="close-button"><CloseIcon /></span>
             </div>
           )
         })}
         <div className="todos-container manipulate-cont">
-          <p>{length} items left</p>
+          <p className="todos-left">{todosLeft} items left</p>
           <div className="middle-cont">
             <h5 onClick={e => {
-             runFilter(e.target.innerText);
+              filterMode(e.target.innerText);
             }}>All</h5>
             <h5 onClick={e => {
-             runFilter(e.target.innerText);
+              filterMode(e.target.innerText);
             }}>Active</h5>
             <h5 onClick={e => {
-             runFilter(e.target.innerText);
+              filterMode(e.target.innerText);
             }}>Completed</h5>
           </div>
           <p onClick={() => {
