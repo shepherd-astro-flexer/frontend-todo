@@ -6,6 +6,7 @@
 
 body {
   margin: 0;
+  background-color: hsl(235, 21%, 11%);
   height: 3000px;
 }
 
@@ -23,12 +24,21 @@ h1 {
 }
 
 header {
-  background-image: url("./images/bg-desktop-dark.jpg");
-  background-size: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   height: 240px;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.4s;
+}
+
+.dark-theme {
+  background-image: url("./images/bg-desktop-dark.jpg");
+}
+
+.light-theme {
+  background-image: url("./images/bg-desktop-light.jpg");
 }
 
 .title-container {
@@ -39,7 +49,8 @@ header {
 }
 
 .theme-toggle {
-  width: 20px
+  width: 20px;
+  cursor: pointer;
 }
 
 /* Input */
@@ -69,6 +80,7 @@ header {
 
 .todos-container:last-child {
   border-radius: 0 0 4px 4px;
+  border: none;
 }
 
 input[type=text] {
@@ -160,9 +172,9 @@ input[type=checkbox]:checked + .toggle-appear::before {
   justify-content: space-between;
 }
 
-.manipulate-cont p:hover, .manipulate-cont h5:hover {
+.manipulate-cont h5:hover {
   cursor: pointer;
-  color: hsl(220, 98%, 61%);
+  color: white;
 }
 
 .middle-cont {
@@ -171,16 +183,22 @@ input[type=checkbox]:checked + .toggle-appear::before {
   width: 150px;
 }
 
-h5:focus {
-  color: red;
-}
-
 .todos-left {
   pointer-events: none;
 }
 
+.focused {
+  color: hsl(220, 98%, 61%);
+}
 
+.items-left {
+  pointer-events: none;
+}
 
+.clear:hover {
+  color: rgb(187, 187, 187);
+  cursor: pointer
+}
 
 
 
