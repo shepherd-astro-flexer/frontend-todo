@@ -12,32 +12,33 @@ function App() {
     {
       name: "Complete onine Javascript course",
       id: 0,
-      checked: false
-    },
-    {
+      checked: false,
+      dragging: false
+    },{
       name: "Jog around the park 3x",
       id: 1,
-      checked: false
-    },
-    {
+      checked: false,
+      dragging: false
+    },{
       name: "10 minutes meditaton",
       id: 2,
-      checked: false
-    },
-    {
+      checked: false,
+      dragging: false
+    },{
       name: "Read for 1 hour",
       id: 3,
-      checked: false
-    },
-    {
+      checked: false,
+      dragging: false
+    },{
       name: "Pick up groceries",
       id: 4,
-      checked: false
-    },
-    {
+      checked: false,
+      dragging: false
+    },{
       name: "Complete Todo App On Frontend Mentor",
       id: 5,
-      checked: false
+      checked: false,
+      dragging: false
     },
   ]);
 
@@ -65,12 +66,13 @@ function App() {
 
   const [activeTodos, updateActiveTodos] = useState(todos.length);
 
-  const [clicked, updateClicked] = useState("All");
-  // ! We created a function(even though we could just update it from the callback)to make it clean
-  const active = active => {
-    updateClicked(active);
+  const drag = (todoId, bool) => {
+    updateTodos(prevValue => {
+      return prevValue.map(val => {
+        return todoId === val.id ? {...val, dragging: bool} : val;
+      })
+    })
   }
-
   return (
     <div>
       <header className={theme === "dark" ? "dark-theme" : "light-theme"}>
@@ -116,7 +118,8 @@ function App() {
       <div>
         {filteredArray.map((todo, idx) => {
           return (
-            <div key={idx} id={idx} className="todos-container">
+            <div onDragStart={() => drag(todo.id, true)} onDragEnd={() => drag(todo.id, false)} 
+            key={idx} id={idx} className={`todos-container draggable ${todo.dragging && "dragging"}`} draggable="true">
               <label className="toggle-container">
                 <input id={todo.id} onChange={e => {
                   const {id, checked} = e.target;
@@ -124,7 +127,6 @@ function App() {
                   updateActiveTodos(prevValue => {
                     return checked ? prevValue -1 : prevValue + 1;
                   })
-
                   // We change the current value of the checked property depending on the value of checked(e)
                   updateTodos(prevValue => {
                     return prevValue.map(val => {
@@ -154,16 +156,13 @@ function App() {
         <div className="todos-container manipulate-cont">
           <p className="items-left">{activeTodos} items left</p>
           <div className="middle-cont">
-            <h5 className={clicked === "All" ? "focused" : ""} onClick={e => {
-              active("All");
+            <h5 className={filteredTodos === "All" ? "focused" : ""} onClick={e => {
               filterMode(e.target.innerText);
             }}>All</h5>
-            <h5 className={clicked === "Active" ? "focused" : ""} onClick={e => {
-              active("Active");
+            <h5 className={filteredTodos === "Active" ? "focused" : ""} onClick={e => {
               filterMode(e.target.innerText);
             }}>Active</h5>
-            <h5 className={clicked === "Completed" ? "focused" : ""} onClick={e => {
-              active("Completed");
+            <h5 className={filteredTodos === "Completed" ? "focused" : ""} onClick={e => {
               filterMode(e.target.innerText);
             }}>Completed</h5>
           </div>

@@ -199,8 +199,14 @@ input[type=checkbox]:checked + .toggle-appear::before {
   color: rgb(187, 187, 187);
   cursor: pointer
 }
+/* Styles for dragging */
+.draggable {
+  cursor: move;
+}
 
-
+.dragging {
+  opacity: 0.5;
+}
 
 
 
