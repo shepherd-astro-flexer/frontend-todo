@@ -74,7 +74,7 @@ function App() {
     })
   }
   return (
-    <div>
+    <div className={`body ${theme === "dark" ? "dark" : "light"}`}>
       <header className={theme === "dark" ? "dark-theme" : "light-theme"}>
         <div className="title-container">
           <h1>TODO</h1>
@@ -85,7 +85,8 @@ function App() {
           }} className="theme-toggle" src={theme === "dark" ? sunIcon : moonIcon} alt="theme" />
         </div>
       </header>
-      <div className="input-container">
+      <div className="todos-body">
+      <div className={`input-container ${theme === "dark" ? "todo-dark-bg" : "todo-light-bg"}`}>
         <label className="toggle-container">
           <input type="checkbox" onChange={e => {
             const checkbox = e.target.checked;
@@ -101,59 +102,53 @@ function App() {
               return checkbox && input.name !== "" ? [...prevValue, input] : [...prevValue];
             })
           }} />
-          <span className="toggle-appear"></span>
+          <span className={`toggle-appear ${theme === "dark" ? "todo-dark-bg" : "todo-light-bg"}`}></span>
         </label>
-        <input onChange={e => {
+        <input className={theme === "dark" ? "todo-dark-bg" : "todo-light-bg"} onChange={e => {
             const name = e.target.value;
 
             updateInput(prevValue => {
-              return {
-                ...prevValue,
-                name,
-                id: todos.length
-              }
-            });
+              return {...prevValue, name}});
         }} value={input.name} type="text" placeholder="Create a new todo..." autoCorrect="none" />
       </div>
       <div>
         {filteredArray.map((todo, idx) => {
           return (
             <div onDragStart={() => drag(todo.id, true)} onDragEnd={() => drag(todo.id, false)} 
-            key={idx} id={idx} className={`todos-container draggable ${todo.dragging && "dragging"}`} draggable="true">
+            key={idx} id={idx} className={`todos-container draggable ${todo.dragging && "dragging"} ${theme === "dark" ? "todo-dark-bg todo-dark-bottom-border" : "todo-light-bg todo-light-bottom-border"}`} draggable="true">
               <label className="toggle-container">
                 <input id={todo.id} onChange={e => {
-                  const {id, checked} = e.target;
-                  console.log(id, checked);
+                  const {checked} = e.target;
+                  console.log(todo.id, checked);
                   updateActiveTodos(prevValue => {
                     return checked ? prevValue -1 : prevValue + 1;
                   })
                   // We change the current value of the checked property depending on the value of checked(e)
                   updateTodos(prevValue => {
                     return prevValue.map(val => {
-                      return val.id == id ? {...val, checked} : val;
+                      return val.id === todo.id ? {...val, checked} : val;
                     })
                   })
                 }} type="checkbox" value={todo.checked} checked={todo.checked} />
                 <span className="toggle-appear"></span>
               </label>
-              <p className={`todo-item ${todo.checked ? "checked-through" : ""}`}>{todo.name}</p>
-              <span onClick={e => {
-                const id = e.currentTarget.id;
-
+              <p className={`todo-item ${todo.checked ? "checked-through" : ""} ${theme === "dark" ? "todo-dark-text" : "todo-light-text"}`}>{todo.name}</p>
+              <span onClick={() => {
+              
                 updateActiveTodos(prevValue => {
                   return !todo.checked ? prevValue - 1 : prevValue;
                 })
                 
                 updateTodos(prevValue => {
-                  return prevValue.filter((val, idx) => {
-                    return idx != id; // ! we are only using 1 equal sign, so the type won't matter when comparing
+                  return prevValue.filter(val => {
+                    return todo.id !== val.id; // ! we are only using 1 equal sign, so the type won't matter when comparing
                   })
                 })
-              }} id={idx} className="close-button"><CloseIcon /></span>
+              }} className="close-button"><CloseIcon /></span>
             </div>
           )
         })}
-        <div className="todos-container manipulate-cont">
+        <div className={`todos-container manipulate-cont ${theme === "dark" ? "todo-dark-bg todo-dark-filter-text" : "todo-light-bg todo-light-filter-text"}`}>
           <p className="items-left">{activeTodos} items left</p>
           <div className="middle-cont">
             <h5 className={filteredTodos === "All" ? "focused" : ""} onClick={e => {
@@ -174,6 +169,7 @@ function App() {
             })
           }}>Clear Completed</p>
         </div>
+      </div>
       </div>
     </div>
   );
