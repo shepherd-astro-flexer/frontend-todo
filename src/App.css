@@ -9,7 +9,8 @@ body {
 }
 
 .body {
-  height: 100vh;
+  /* height: 100vh; */
+  height: 3000px;
 }
 
 /* Header */
@@ -32,9 +33,10 @@ header {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 50px;
+  padding-top: 30px;
   transition: all 0.4s;
 }
+
 /* * Dark theme */
 .dark-theme {
   background-image: url("./images/bg-desktop-dark.jpg");
@@ -43,6 +45,14 @@ header {
 .dark {
   background-color: hsl(235, 21%, 11%);
   transition: all 0.4s;
+}
+
+.dark-hover {
+  filter: invert(100%) sepia(1%) saturate(4082%) hue-rotate(222deg) brightness(113%) contrast(101%);
+}
+
+.theme-toggle.dark-hover:hover {
+  filter: invert(61%) sepia(8%) saturate(7186%) hue-rotate(4deg) brightness(109%) contrast(103%);
 }
 
 .todo-dark-bg {
@@ -65,9 +75,36 @@ header {
   transition: all 0.4s;
 }
 
+.todo-dark-close {
+  color: hsl(237, 14%, 26%);
+}
+
+.toggle-dark-border {
+  border-color: rgb(85, 85, 85);
+}
+
+.h5-dark-text:hover {
+  color: white;
+}
+
+.checked-through.dark-check-through {
+  color: hsl(235, 19%, 35%);
+}
+
+.dark-shadow {
+  box-shadow: 0 10px 0 10px red, 0 20px 0 20px green, 0 30px 0 30px blue;
+}
 /* * Light theme */
 .light-theme {
   background-image: url("./images/bg-desktop-light.jpg");
+}
+
+.light-hover {
+  filter: invert(100%) sepia(1%) saturate(4082%) hue-rotate(222deg) brightness(113%) contrast(101%);
+}
+
+.theme-toggle.light-hover:hover {
+  filter: invert(14%) sepia(44%) saturate(3757%) hue-rotate(227deg) brightness(94%) contrast(104%);
 }
 
 .light {
@@ -94,6 +131,22 @@ header {
   border-bottom: 1px solid hsl(233, 11%, 84%);
   transition: all 0.4s;
 }
+
+.todo-light-close {
+  color: hsl(236, 9%, 61%);
+}
+
+.toggle-light-border {
+  border-color: hsl(236, 33%, 92%);
+}
+
+.h5-light-text:hover {
+  color: hsl(235, 19%, 35%);
+}
+
+.checked-through.light-check-through {
+  color: hsl(233, 11%, 84%);
+}
 /* */
 .title-container {
   width: 430px;
@@ -108,7 +161,7 @@ header {
 }
 
 /* Input */
-/* ! pwede ang url() sa content para makalagay tayo ng images*/
+/* ! pwede ang url() sa content para makalagay tayo ng images */
 .input-container {
   border-radius: 4px;
   margin-bottom: 20px;
@@ -139,7 +192,6 @@ input[type=text] {
   /* ! para matangal yung excess na width at height */
   padding: 0;
   border: none;
-  color: hsl(234, 39%, 85%);
 }
 
 input[type=text]:focus {
@@ -174,7 +226,8 @@ input[type=checkbox]:checked .toggle-container + .todo-item {
   right: 0;
   bottom: 0;
   border-radius: 50%;
-  border: 1px solid rgb(85, 85, 85);
+  border-width: 1px;
+  border-style: solid;
 }
 
 input[type=checkbox]:checked + .toggle-appear {
@@ -194,21 +247,19 @@ input[type=checkbox]:checked + .toggle-appear::before {
 }
 
 .close-button {
-  color: hsl(240, 16%, 10%);
   font-weight: 300;
   margin-right: 10px;
   cursor: pointer;
   display: none;
-}
-/* ! CSS lang pala fffFFFfFFF! :/ */
-.todos-container:hover .close-button {
-  display: block;
-  color: hsl(237, 14%, 26%);
+  transition: all 0.4s;
 }
 
+.todos-container:hover .close-button {
+  display: block;
+}
+/* ! CSS lang pala fffFFFfFFF! :/ */
 .checked-through {
   text-decoration: line-through;
-  color: hsl(235, 19%, 35%);
 }
 
 .manipulate-cont p {
@@ -223,7 +274,6 @@ input[type=checkbox]:checked + .toggle-appear::before {
 
 .manipulate-cont h5:hover {
   cursor: pointer;
-  color: white;
 }
 
 .middle-cont {
@@ -259,63 +309,7 @@ input[type=checkbox]:checked + .toggle-appear::before {
 
 .todos-body {
   position: absolute;
-  top: 125px;
+  top: 90px;
   left: 50%;
   transform: translateX(-50%);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */

@@ -4,7 +4,6 @@ import sunIcon from "./images/icon-sun.svg";
 import moonIcon from "./images/icon-moon.svg";
 import CloseIcon from '@mui/icons-material/Close';
 
-
 function App() {
   // ! Object is the key :)
   const [theme, setTheme] = useState("dark");
@@ -82,7 +81,7 @@ function App() {
             setTheme(prevValue => {
               return prevValue === "dark" ? "light" : "dark";
             });
-          }} className="theme-toggle" src={theme === "dark" ? sunIcon : moonIcon} alt="theme" />
+          }} className={`theme-toggle ${theme === "dark" ? "dark-hover" : "light-hover"}`} src={theme === "dark" ? sunIcon : moonIcon} alt="theme" />
         </div>
       </header>
       <div className="todos-body">
@@ -102,16 +101,16 @@ function App() {
               return checkbox && input.name !== "" ? [...prevValue, input] : [...prevValue];
             })
           }} />
-          <span className={`toggle-appear ${theme === "dark" ? "todo-dark-bg" : "todo-light-bg"}`}></span>
+          <span className={`toggle-appear ${theme === "dark" ? "todo-dark-bg toggle-dark-border" : "todo-light-bg toggle-light-border"}`}></span>
         </label>
-        <input className={theme === "dark" ? "todo-dark-bg" : "todo-light-bg"} onChange={e => {
+        <input className={theme === "dark" ? "todo-dark-bg todo-dark-text" : "todo-light-bg todo-light-text"} onChange={e => {
             const name = e.target.value;
 
             updateInput(prevValue => {
               return {...prevValue, name}});
         }} value={input.name} type="text" placeholder="Create a new todo..." autoCorrect="none" />
       </div>
-      <div>
+      <div className="dark-shadow">
         {filteredArray.map((todo, idx) => {
           return (
             <div onDragStart={() => drag(todo.id, true)} onDragEnd={() => drag(todo.id, false)} 
@@ -130,9 +129,9 @@ function App() {
                     })
                   })
                 }} type="checkbox" value={todo.checked} checked={todo.checked} />
-                <span className="toggle-appear"></span>
+                <span className={`toggle-appear ${theme === "dark" ? "toggle-dark-border" : "toggle-light-border"}`}></span>
               </label>
-              <p className={`todo-item ${todo.checked ? "checked-through" : ""} ${theme === "dark" ? "todo-dark-text" : "todo-light-text"}`}>{todo.name}</p>
+              <p className={`todo-item ${todo.checked && theme === "dark" ? "checked-through dark-check-through" : ""} ${todo.checked && theme === "light" ? "checked-through light-check-through" : ""} ${theme === "dark" ? "todo-dark-text" : "todo-light-text"}`}>{todo.name}</p>
               <span onClick={() => {
               
                 updateActiveTodos(prevValue => {
@@ -144,20 +143,20 @@ function App() {
                     return todo.id !== val.id; // ! we are only using 1 equal sign, so the type won't matter when comparing
                   })
                 })
-              }} className="close-button"><CloseIcon /></span>
+              }} className={`close-button ${theme === "dark" ? "todo-dark-close" : "todo-light-close"}`}><CloseIcon /></span>
             </div>
           )
         })}
         <div className={`todos-container manipulate-cont ${theme === "dark" ? "todo-dark-bg todo-dark-filter-text" : "todo-light-bg todo-light-filter-text"}`}>
           <p className="items-left">{activeTodos} items left</p>
           <div className="middle-cont">
-            <h5 className={filteredTodos === "All" ? "focused" : ""} onClick={e => {
+            <h5 className={`${filteredTodos === "All" ? "focused" : ""} ${theme === "dark" ? "h5-dark-text" : "h5-light-text"}`} onClick={e => {
               filterMode(e.target.innerText);
             }}>All</h5>
-            <h5 className={filteredTodos === "Active" ? "focused" : ""} onClick={e => {
+            <h5 className={`${filteredTodos === "Active" ? "focused" : ""} ${theme === "dark" ? "h5-dark-text" : "h5-light-text"}`} onClick={e => {
               filterMode(e.target.innerText);
             }}>Active</h5>
-            <h5 className={filteredTodos === "Completed" ? "focused" : ""} onClick={e => {
+            <h5 className={`${filteredTodos === "Completed" ? "focused" : ""} ${theme === "dark" ? "h5-dark-text" : "h5-light-text"}`} onClick={e => {
               filterMode(e.target.innerText);
             }}>Completed</h5>
           </div>
@@ -176,51 +175,5 @@ function App() {
 }
 
 export default App;
-// updateAllTodos(prevValue => {
-              //   return prevValue.map(item => {
-              //     return mapIt.map(mapItem => {
-              //       return item.id === mapItem.id ? mapItem : item;
-              //     })
-              //   })
-              // }); // ! We save the current value
-              // // ! We created a filter for active and completed arrays.
-              // const active = todos.filter(todo => {
-              //   return !todo.checked;
-              // })
-
-              // const completed = todos.filter(todo => {
-              //   return todo.checked;
-              // })
-
-              // const isThereActive = todos.every(todo => {
-              //   return !todo.checked;
-              // })
-              
-              // console.log(active, completed);
-              // console.log(e.target.innerText);
-              // console.log(isThereActive);
-              
-              // updateActiveTodos(prevValue => {
-              //   return isThereActive ? prevValue : [...prevValue, ...active];
-              // })
-
-              // updateCompletedTodos(prevValue => {
-              //   return [...prevValue, ...completed];
-              // })
-
-
-              // // I think the problem is here
-              // updateAllTodos();
-              // // [...active, ...completed]
-              // updateTodos(prevValue => {
-              //   return prevValue.filter(todo => {
-              //     return !todo.checked;
-              //   })
-              // })
-               // const [counter, setCounter] = useState(0);
-  // const [allTodos, updateAllTodos] = useState([]); // ! Test 
-  // const [activeTodos, updateActiveTodos] = useState([]);
-  // const [completedTodos, updateCompletedTodos] = useState([]);
-  // const [showTodos, updateShowTodos] = useState(true);
 
             
